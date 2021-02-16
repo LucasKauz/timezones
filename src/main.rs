@@ -1,9 +1,10 @@
-#![recursion_limit="256"]
-use wasm_bindgen::prelude::*;
+#![recursion_limit="1024"]
+use console_error_panic_hook::set_once as set_panic_hook;
+// use wasm_bindgen::prelude::*;
 use yew::prelude::*;
 // use chrono::prelude::*;
 
-struct Counter {
+struct App {
     link: ComponentLink<Self>,
     local_timezone: i32,
     desired_overlap: u32,
@@ -18,7 +19,7 @@ enum Msg {
     UpdateOverlap()
 }
 
-impl Component for Counter {
+impl Component for App {
     type Message = Msg;
     type Properties = ();
     fn create(_: Self::Properties, link: ComponentLink<Self>) -> Self {
@@ -36,20 +37,14 @@ impl Component for Counter {
             Msg::UpdateLocalTime(time) => {
                 self.local_timezone = time;
                 // Msg::UpdateOverlap();
-                self.overlap = self.target_timezone - self.local_timezone;
+                self.overlap = (self.target_timezone - self.local_timezone).abs();
             },
             Msg::UpdateOverlap() => {
-                self.overlap = self.target_timezone - self.local_timezone;
+              self.overlap = (self.target_timezone - self.local_timezone).abs();
             },
             Msg::UpdateTargetTimezone(time) => {
                 self.target_timezone = time;
-                // Msg::UpdateOverlap();
-                let overlap = self.target_timezone - self.local_timezone;
-                if overlap.is_negative() {
-                    self.overlap = overlap.wrapping_abs();
-                } else {
-                    self.overlap = overlap;
-                }
+                self.overlap = (self.target_timezone - self.local_timezone).abs();
             },
             Msg::UpdateDesiredOverlap(hours) => {
                 self.desired_overlap = hours
@@ -62,7 +57,6 @@ impl Component for Counter {
         // Should only return "true" if new properties are different to
         // previously received properties.
         // This component has no properties so we will always return "false".
-        self.overlap = self.target_timezone - self.local_timezone;
         true
     }
 
@@ -73,7 +67,7 @@ impl Component for Counter {
         Msg::UpdateOverlap();
         html! {
             <div>
-                <p>{"Base timezone"}</p>
+                <p>{"Base timezone3"}</p>
                 <input type="text" placeholder="0" oninput=update_local_timezone value={self.local_timezone}/>
                 <p>{"Target timezone"}</p>
                 <input type="text" placeholder="0" oninput=update_target_timezone value={self.target_timezone}/>
@@ -86,7 +80,7 @@ impl Component for Counter {
     }
 }
 
-#[wasm_bindgen(start)]
-pub fn run_app() {
-    App::<Counter>::new().mount_to_body();
+fn main() {
+  set_panic_hook();
+  yew::start_app::<App>();
 }

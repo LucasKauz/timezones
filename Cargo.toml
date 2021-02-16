@@ -1,11 +1,11 @@
 [package]
-name = "yew-app"
+name = "timezones"
 version = "0.1.0"
-authors = ["Yew App Developer <name@example.com>"]
+authors = ["Lucas Marques <lucaskauz@gmail.com>"]
 edition = "2018"
 
-[lib]
-crate-type = ["cdylib", "rlib"]
+# [lib]
+# crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 yew = "0.17"
