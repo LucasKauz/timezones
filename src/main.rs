@@ -67,13 +67,14 @@ impl Component for App {
         Msg::UpdateOverlap();
         html! {
             <div>
-                <p>{"Local Timezone"}</p>
+                <h1>{"Timezone Overlap Calculator"}</h1>
+                <h2>{"Local Timezone:"}</h2>
                 <input type="text" placeholder="0" oninput=update_local_timezone value={self.local_timezone}/>
-                <p>{"Target Timezone"}</p>
+                <h2>{"Target Timezone:"}</h2>
                 <input type="text" placeholder="0" oninput=update_target_timezone value={self.target_timezone}/>
-                <p>{"Desired Overlap (hours)"}</p>
+                <h2>{"Desired Overlap (hours):"}</h2>
                 <input type="number" placeholder="4" oninput=update_desired_overlap value={self.desired_overlap} />
-                <p>{"Working works overlap (hours)"}</p>
+                <h2>{"Working works overlap (hours):"}</h2>
                 <input type="text" readonly=true value={8 - self.overlap}/>
             </div>
         }
