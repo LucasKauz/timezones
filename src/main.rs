@@ -1,4 +1,9 @@
-#![recursion_limit="1024"]
+#![recursion_limit="2048"]
+
+mod components;
+
+// use components::time_circle::TimeCircle;
+
 use console_error_panic_hook::set_once as set_panic_hook;
 // use wasm_bindgen::prelude::*;
 use yew::prelude::*;
@@ -66,7 +71,7 @@ impl Component for App {
         let update_desired_overlap = self.link.callback(|e: InputData| Msg::UpdateDesiredOverlap(e.value.parse().unwrap()));
         Msg::UpdateOverlap();
         html! {
-            <div>
+            <div class="App">
                 <h1>{"Timezone Overlap Calculator"}</h1>
                 <h2>{"Local Timezone:"}</h2>
                 <input type="text" placeholder="0" oninput=update_local_timezone value={self.local_timezone}/>
